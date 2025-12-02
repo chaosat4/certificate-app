@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/db';
 import { parse } from 'csv-parse/sync';
 import { uploadToS3 } from '@/app/lib/s3';
-import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
+import { createCanvas, loadImage, registerFont } from 'canvas';
 import nodemailer from 'nodemailer';
 import jwt from 'jsonwebtoken';
 import { Queue, Worker } from 'bullmq';
@@ -15,11 +15,11 @@ import path from 'path';
 // ----------------------------------------
 // Font Registration (if you need custom fonts)
 // ----------------------------------------
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/MonteCarlo-Regular.ttf'), 'MonteCarlo');
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/AlexBrush-Regular.ttf'), 'AlexBrush');
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/Birthstone-Regular.ttf'), 'Birthstone');
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/DancingScript-Regular.ttf'), 'DancingScript');
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/LibreBaskerville-Regular.ttf'), 'LibreBaskerville');
+registerFont(path.join(process.cwd(), 'public/fonts/MonteCarlo-Regular.ttf'), { family: 'MonteCarlo' });
+registerFont(path.join(process.cwd(), 'public/fonts/AlexBrush-Regular.ttf'), { family: 'AlexBrush' });
+registerFont(path.join(process.cwd(), 'public/fonts/Birthstone-Regular.ttf'), { family: 'Birthstone' });
+registerFont(path.join(process.cwd(), 'public/fonts/DancingScript-Regular.ttf'), { family: 'DancingScript' });
+registerFont(path.join(process.cwd(), 'public/fonts/LibreBaskerville-Regular.ttf'), { family: 'LibreBaskerville' });
 
 interface FileLike {
   arrayBuffer: () => Promise<ArrayBuffer>;
@@ -603,7 +603,7 @@ export async function POST(request: Request) {
   }
 
   // 5. Transaction: Deduct tokens, create batch
-  const { batch } = await prisma.$transaction(async (tx) => {
+  const { batch } = await prisma.$transaction(async (tx: any) => {
     const updatedUser = await tx.user.update({
       where: { id: userId },
       data: {

@@ -3,17 +3,17 @@ import QRCode from 'qrcode';
 import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/db';
 import { uploadToS3 } from '@/app/lib/s3';
-import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
+import { createCanvas, loadImage, registerFont } from 'canvas';
 import { Queue } from 'bullmq';
 import IORedis from 'ioredis';
 import path from 'path';
 import { rateLimiter } from '@/app/config/rate-limit';
 
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/MonteCarlo-Regular.ttf'), 'MonteCarlo');
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/AlexBrush-Regular.ttf'), 'AlexBrush');
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/Birthstone-Regular.ttf'), 'Birthstone');
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/DancingScript-Regular.ttf'), 'DancingScript');
-GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/LibreBaskerville-Regular.ttf'), 'LibreBaskerville');
+registerFont(path.join(process.cwd(), 'public/fonts/MonteCarlo-Regular.ttf'), { family: 'MonteCarlo' });
+registerFont(path.join(process.cwd(), 'public/fonts/AlexBrush-Regular.ttf'), { family: 'AlexBrush' });
+registerFont(path.join(process.cwd(), 'public/fonts/Birthstone-Regular.ttf'), { family: 'Birthstone' });
+registerFont(path.join(process.cwd(), 'public/fonts/DancingScript-Regular.ttf'), { family: 'DancingScript' });
+registerFont(path.join(process.cwd(), 'public/fonts/LibreBaskerville-Regular.ttf'), { family: 'LibreBaskerville' });
 if (!process.env.REDIS_URL) {
  throw new Error('REDIS_URL is not defined in environment variables');
 }

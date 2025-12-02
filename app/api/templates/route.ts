@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '@/app/lib/db';
 import { uploadToS3 } from '@/app/lib/s3';
 import jwt from 'jsonwebtoken';
-import { createCanvas, loadImage } from '@napi-rs/canvas';
+import { createCanvas, loadImage, registerFont } from 'canvas';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
