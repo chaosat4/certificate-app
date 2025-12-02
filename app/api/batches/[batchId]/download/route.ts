@@ -57,7 +57,7 @@ export async function GET(
 
     // Add data fields if they exist
     const dataKeys = new Set<string>();
-    batch.certificates.forEach(cert => {
+    batch.certificates.forEach((cert: { data: unknown }) => {
       Object.keys(cert.data as object).forEach(key => {
         dataKeys.add(key);
       });
@@ -69,7 +69,7 @@ export async function GET(
     csvContent += '\n';
 
     // Add certificate data
-    batch.certificates.forEach(cert => {
+    batch.certificates.forEach((cert: { uniqueIdentifier: string; generatedImageUrl: string; createdAt: Date; data: unknown }) => {
       const row = [
         cert.uniqueIdentifier,
         cert.generatedImageUrl,

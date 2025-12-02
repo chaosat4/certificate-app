@@ -2,7 +2,14 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Batch } from '@prisma/client';
+
+export interface Batch {
+  id: string;
+  name: string;
+  creatorId: string;
+  progress: number;
+  createdAt: Date;
+}
 
 interface BounceAnalysisProps {
   batches: Batch[];

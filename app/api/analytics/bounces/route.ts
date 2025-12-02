@@ -45,8 +45,8 @@ export async function GET(request: Request) {
     });
 
     // Extract emails from certificates
-    const emails = certificates.map(cert => {
-      const data = cert.data as any;
+    const emails = certificates.map((cert: { data: unknown }) => {
+      const data = cert.data as Record<string, string>;
       return data.email;
     }).filter(Boolean); // Remove any undefined/null emails
 
@@ -67,7 +67,7 @@ export async function GET(request: Request) {
       },
     });
 
-    const bouncedEmails = bounces.map(bounce => bounce.email);
+    const bouncedEmails = bounces.map((bounce: { email: string }) => bounce.email);
 
     return NextResponse.json({ bouncedEmails });
   } catch (error) {

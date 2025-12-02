@@ -5,8 +5,7 @@ import { useRouter } from 'next/navigation';
 import { BatchList } from '@/app/components/BatchList';
 import { UserTokenHistory } from '@/app/components/UserTokenHistory';
 import { AnalyticsSummary } from '@/app/components/AnalyticsSummary';
-import { BounceAnalysis } from '@/app/components/BounceAnalysis';
-import { Batch } from '@prisma/client';
+import { BounceAnalysis, Batch } from '@/app/components/BounceAnalysis';
 
 export default function AnalyticsPage() {
   const router = useRouter();

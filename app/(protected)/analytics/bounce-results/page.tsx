@@ -2,9 +2,13 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Batch } from '@prisma/client';
 
-interface BatchDetails extends Batch {
+interface BatchDetails {
+  id: string;
+  name: string;
+  creatorId: string;
+  progress: number;
+  createdAt: Date;
   _count: {
     certificates: number;
     failedCertificates: number;

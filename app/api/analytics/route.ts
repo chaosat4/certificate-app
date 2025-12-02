@@ -42,8 +42,8 @@ export async function GET(request: Request) {
     prisma.certificate.findMany({ where: { creatorId: userId }, select: { data: true } })
   ]);
 
-  const totalEmailsSent = certificates.reduce((count, cert) => {
-    const email = (cert.data as Record<string, any>)?.Email;
+  const totalEmailsSent = certificates.reduce((count: number, cert: { data: unknown }) => {
+    const email = (cert.data as Record<string, string>)?.Email;
     return email ? count + 1 : count;
   }, 0);
 
