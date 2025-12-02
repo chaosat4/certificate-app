@@ -1,27 +1,13 @@
 import { NextResponse } from 'next/server';
-import { createCanvas, loadImage, registerFont } from 'canvas';
+import { createCanvas, loadImage, GlobalFonts } from '@napi-rs/canvas';
 import jwt from 'jsonwebtoken';
 import path from 'path';
 
-registerFont(path.join(process.cwd(), 'public/fonts/MonteCarlo-Regular.ttf'), {
-  family: 'MonteCarlo',
-});
-
-registerFont(path.join(process.cwd(), 'public/fonts/AlexBrush-Regular.ttf'), {
-  family: 'AlexBrush',
-});
-
-registerFont(path.join(process.cwd(), 'public/fonts/Birthstone-Regular.ttf'), {
-  family: 'Birthstone',
-});
-
-registerFont(path.join(process.cwd(), 'public/fonts/DancingScript-Regular.ttf'), {
-  family: 'DancingScript',
-});
-
-registerFont(path.join(process.cwd(), 'public/fonts/LibreBaskerville-Regular.ttf'), {
-  family: 'LibreBaskerville',
-});
+GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/MonteCarlo-Regular.ttf'), 'MonteCarlo');
+GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/AlexBrush-Regular.ttf'), 'AlexBrush');
+GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/Birthstone-Regular.ttf'), 'Birthstone');
+GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/DancingScript-Regular.ttf'), 'DancingScript');
+GlobalFonts.registerFromPath(path.join(process.cwd(), 'public/fonts/LibreBaskerville-Regular.ttf'), 'LibreBaskerville');
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
